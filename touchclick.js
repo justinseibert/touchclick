@@ -5,7 +5,6 @@
  */
 
 var touchclick = function(element, callback){
-  var touched = false;
   var symbol = element[0];
   var name = element.substr(1);
 
@@ -15,6 +14,7 @@ var touchclick = function(element, callback){
     element = document.getElementById(name);
   }
 
+  console.log(element);
   if (element.length != 'undefined' && element.length > 0){
     for (var i = 0; i < element.length; i++){
       addTouch(element[i]);
@@ -26,21 +26,21 @@ var touchclick = function(element, callback){
   }
 
   function addTouch(elem){
-    elem.addEventListener('touchend', handleTouchStart, false);
-  }
-  function addClick(elem){
-    elem.addEventListener('click', handleClick, false);
+    var move = false;
+    elem.addEventListener('touchmove', function(evt){
+      move = true;
+    })
+    elem.addEventListener('touchend', function(evt){
+      if (!move){
+        evt.preventDefault();
+        elem.click();
+      }
+    })
   }
 
-  function handleTouchStart(){
-    touched = true;
-    callback(this);
-  }
-  function handleClick(){
-    if (touched){
-      touched = false;
-      return;
-    }
-    callback(this);
+  function addClick(elem){
+    elem.addEventListener('click', function(evt){
+      callback(elem);
+    })
   }
 }
