@@ -1,5 +1,5 @@
 /**
- * this version uses preven.Default() to ginore subsequent click calls
+ * this version uses prevent.Default() to ginore subsequent click calls
  * @param {string} element - target element denoted by class ('.class') or id ('#id')
  * @param {function} callback - the function to attach to the element
  */
